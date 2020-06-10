@@ -13,7 +13,9 @@ module.exports = function(router) {
       res.end(run);
     })
     .catch(err => {
+      //error from rejected promise
       console.error(err)
+      //error sent to client
       res.writeHead(404, {'Content-Type': 'text/plain'});
       res.end();
     })
