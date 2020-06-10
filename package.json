@@ -1,0 +1,23 @@
+{
+  "name": "run-tracking-app",
+  "version": "1.0.0",
+  "description": "app to track runs and factors influencing rate of perceived exertion",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/misspants87/run-tracking-app.git"
+  },
+  "author": "sarah.debey@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/misspants87/run-tracking-app/issues"
+  },
+  "homepage": "https://github.com/misspants87/run-tracking-app#readme",
+  "dependencies": {
+    "http": "0.0.1-security"
+  }
+}
