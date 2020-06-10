@@ -1,9 +1,9 @@
 'use strict';
 
-const router = require('./router.js');
-const storage = require('./storage.js');
-const parseJSON = require('./parse-json.js');
-const Run = require('../model/js');
+const router = require('../lib/router.js');
+const storage = require('../lib/storage.js');
+// const parseJSON = require('./parse-json.js');
+// const Run = require('../model/js');
 
 module.exports = function(router) {
   router.get('/api/run', function(req, res) {

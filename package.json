@@ -18,6 +18,12 @@
   },
   "homepage": "https://github.com/misspants87/run-tracking-app#readme",
   "dependencies": {
-    "http": "0.0.1-security"
+    "assert": "^2.0.0",
+    "bluebird": "^3.7.2",
+    "chai": "^4.2.0",
+    "fs": "0.0.1-security",
+    "http": "0.0.1-security",
+    "mkdirp": "^1.0.4",
+    "superagent": "^5.2.2"
   }
 }
