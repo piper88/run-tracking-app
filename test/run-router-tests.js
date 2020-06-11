@@ -11,6 +11,7 @@ describe('testing run routes', function() {
   storage.createResourceDirectory();
 
   describe('testing GET /api/run', function() {
+
   describe('with valid run date', function () {
     it('should return a run', function(done) {
       request.get('localhost:3000/api/run?date=today')
@@ -31,6 +32,7 @@ describe('testing run routes', function() {
       })
     })
   })
+
   describe('with invalid run date', function() {
     it('should return a 404 not found error', function(done) {
       request.get('localhost:3000/api/run?date=neverp')

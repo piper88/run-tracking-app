@@ -23,6 +23,7 @@
     "chai": "^4.2.0",
     "fs": "0.0.1-security",
     "http": "0.0.1-security",
+    "http-server": "^0.12.3",
     "mkdirp": "^1.0.4",
     "superagent": "^5.2.2"
   }
