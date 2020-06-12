@@ -24,6 +24,11 @@ describe('testing run routes', function() {
     .then(() => done())
     .catch((err) => done(err));
     })
+      after(done => {
+    storage.deleteItem('today')
+    .then(() => done())
+    .catch((err) => done(err));
+    })
       request.get('localhost:3000/api/run?date=today')
       .end((err, res) => {
         if (err) return done(err);
@@ -57,11 +62,11 @@ describe('testing run routes', function() {
   describe('testing POST /api/run', function() {
     describe('with valid body', function() {
       it('should create a run', function(done) {
-        // after(done => {
-        //   storage.deleteItem('June 5, 2020')
-        //   .then(() => done())
-        //   .catch((err) => done(err));
-        // });
+        after(done => {
+          storage.deleteItem('June 5, 2020')
+          .then(() => done())
+          .catch((err) => done(err));
+        });
         request.post('localhost:3000/api/run')
         .send({date: 'June 5, 2020', distance: 10, pace: 930})
         .end((err, res) => {
@@ -105,5 +110,46 @@ describe('testing run routes', function() {
       })
     })
   })
+
+  describe('testing DELETE /api/run', function() {
+  describe('with valid date', function() {
+    before(done => {
+      let run = {
+        date: 'tomorrow',
+        distance: 6,
+        pace: 730,
+      };
+      storage.createItem(run)
+      .then(() => done())
+      .catch((err) => done(err));
+    })
+    it('should return a 204 status, successfully deleted', function(done) {
+      request.delete('localhost:3000/api/run?date=tomorrow')
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.status).to.equal(204);
+        done();
+      })
+    })
+  })
+  describe('with invalid date', function() {
+    it('should return a 404 not found error', function(done) {
+      request.delete('localhost:3000/api/run?date=tomorrow')
+      .end((err, res) => {
+        expect(res.status).to.equal(404);
+        done();
+      })
+    })
+  })
+  describe('with missing date', function() {
+    it('should return a 400 bad request error', function(done) {
+      request.delete('localhost:3000/api/run?date=')
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        done();
+      })
+    })
+  })
+})
 
 })
