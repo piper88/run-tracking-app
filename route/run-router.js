@@ -43,4 +43,23 @@ module.exports = function(router) {
     })
   })
 
+  router.delete('/api/run', function(req, res) {
+  if (req.url.query.date) {
+    storage.deleteItem(req.url.query.date)
+    .then((dateOfDeletedRun) => {
+      res.writeHead(204, {'Content-Type': 'text/plain'});
+      res.write(`Run on ${dateOfDeletedRun} deleted`)
+      res.end();
+    })
+    .catch((err) => {
+      res.writeHead(404, {'Content-Type': 'text/plain'})
+      res.write('Run not found')
+      res.end();
+    })
+  } else {
+    res.writeHead(400, {'Content-Type': 'text/plain'})
+    res.end();
+  }
+})
+
 }
