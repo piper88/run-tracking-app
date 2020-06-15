@@ -152,4 +152,183 @@ describe('testing run routes', function() {
   })
 })
 
+describe('testing PUT /api/run', function() {
+  describe('with valid date and body', function() {
+    before(done => {
+      let run = {
+        date: 'tomorrow',
+        distance: 6,
+        pace: 730,
+      };
+      storage.createItem(run)
+      .then(() => done())
+      .catch(err => done(err));
+    })
+    after(done => {
+      storage.deleteItem('tomorrow')
+      .then(() => done())
+      .catch(err => done(err));
+    })
+    it('should return a new item', function(done) {
+      request.put('localhost:3000/api/run?date=tomorrow')
+      .send({date: 'tomorrow', distance: 12, pace: 930})
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.status).to.equal(200);
+        expect(res.body.distance).to.equal(12);
+        done();
+      })
+    })
+  })
+  describe('with invalid date', function() {
+    before(done => {
+      let run = {
+        date: '6-8-20',
+        distance: 1,
+        pace: 600,
+      };
+      storage.createItem(run)
+      .then(() => done())
+      .catch(err => done(err));
+    })
+    after(done => {
+      storage.deleteItem('6-8-20')
+      .then(() => done())
+      .catch(err => done(err));
+    })
+    it('should return a 404 error', function(done) {
+      request.put('localhost:3000/api/run?date=whenever')
+      .send({date:'whenever', distance: 2, pace: 630})
+      .end((err, res) => {
+        expect(res.status).to.equal(404);
+        done();
+      })
+    })
+  })
+  describe('with missing query date', function() {
+    before(done => {
+      let run = {
+        date: '6-8-20',
+        distance: 1,
+        pace: 600,
+      };
+      storage.createItem(run)
+      .then(() => done())
+      .catch(err => done(err));
+    })
+    after(done => {
+      storage.deleteItem('6-8-20')
+      .then(() => done())
+      .catch(err => done(err));
+    })
+    it('should return a 400 error', function(done) {
+      request.put('localhost:3000/api/run')
+      .send({date: 'whenever', distance: 0, pace: 0})
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        done();
+      })
+    })
+  })
+  describe('with missing date in body', function() {
+    before(done => {
+      let run = {
+        date: '6-8-20',
+        distance: 1,
+        pace: 600,
+      };
+      storage.createItem(run)
+      .then(() => done())
+      .catch(err => done(err));
+    })
+    after(done => {
+      storage.deleteItem('6-8-20')
+      .then(() => done())
+      .catch(err => done(err));
+    })
+    it('should return a 400 error', function(done) {
+      request.put('localhost:3000/api/run?date=6-8-20')
+      .send({distance: 5, pace: 500})
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        done();
+      })
+    })
+  })
+  describe('with missing distance', function() {
+    before(done => {
+      let run = {
+        date: '6-8-20',
+        distance: 1,
+        pace: 600,
+      };
+      storage.createItem(run)
+      .then(() => done())
+      .catch(err => done(err));
+    })
+    after(done => {
+      storage.deleteItem('6-8-20')
+      .then(() => done())
+      .catch(err => done(err));
+    })
+    it('should return a 400 error', function(done) {
+      request.put('localhost:3000/api/run?date=6-8-20')
+      .send({date: '6-8-20', pace: 500})
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        done();
+      })
+    })
+  })
+  describe('with missing pace', function() {
+    before(done => {
+      let run = {
+        date: '6-8-20',
+        distance: 1,
+        pace: 600,
+      };
+      storage.createItem(run)
+      .then(() => done())
+      .catch(err => done(err));
+    })
+    after(done => {
+      storage.deleteItem('6-8-20')
+      .then(() => done())
+      .catch(err => done(err));
+    })
+    it('should return a 400 error', function(done) {
+      request.put('localhost:3000/api/run?date=6-8-20')
+      .send({date: '6-8-20' ,distance: 5})
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        done();
+      })
+    })
+  })
+  describe('with missing request body', function() {
+    before(done => {
+      let run = {
+        date: '6-8-20',
+        distance: 1,
+        pace: 600,
+      };
+      storage.createItem(run)
+      .then(() => done())
+      .catch(err => done(err));
+    })
+    after(done => {
+      storage.deleteItem('6-8-20')
+      .then(() => done())
+      .catch(err => done(err));
+    })
+    it('should return a 400 error', function(done) {
+      request.put('localhost:3000/api/run')
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        done();
+      })
+    })
+  })
+})
+
 })
